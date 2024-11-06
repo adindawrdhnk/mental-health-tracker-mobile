@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:mental_health_tracker/widgets/left_drawer.dart';
+import 'package:mental_health_tracker/screens/moodentry_form.dart'; 
+import 'package:mental_health_tracker/widgets/mood_card.dart';
 
 class MyHomePage extends StatelessWidget {
+  final String npm = '2306165856'; 
+  final String name = 'Adinda Maharani Wardhana'; 
+  final String className = 'PBP A'; 
+
   MyHomePage({super.key});
-  final String npm = '2306165856';
-  final String name = 'Adinda Maharani Wardhana';
-  final String className = 'PBP C';
 
   final List<ItemHomepage> items = [
     ItemHomepage("Lihat Mood", Icons.mood),
@@ -16,6 +20,7 @@ class MyHomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        iconTheme: const IconThemeData(color: Colors.white),
         title: const Text(
           'Mental Health Tracker',
           style: TextStyle(
@@ -25,6 +30,7 @@ class MyHomePage extends StatelessWidget {
         ),
         backgroundColor: Theme.of(context).colorScheme.primary,
       ),
+      drawer: const LeftDrawer(),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -101,16 +107,11 @@ class InfoCard extends StatelessWidget {
   }
 }
 
-class ItemHomepage {
-  final String name;
-  final IconData icon;
-
-  ItemHomepage(this.name, this.icon);
-}
-
 class ItemCard extends StatelessWidget {
   final ItemHomepage item;
+
   const ItemCard(this.item, {super.key});
+
   @override
   Widget build(BuildContext context) {
     return Material(
@@ -122,6 +123,15 @@ class ItemCard extends StatelessWidget {
             ..hideCurrentSnackBar()
             ..showSnackBar(SnackBar(
                 content: Text("Kamu telah menekan tombol ${item.name}!")));
+
+          if (item.name == "Tambah Mood") {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => MoodEntryFormPage(),
+              ),
+            );
+          }
         },
         child: Container(
           padding: const EdgeInsets.all(8),
@@ -147,4 +157,11 @@ class ItemCard extends StatelessWidget {
       ),
     );
   }
+}
+
+class ItemHomepage {
+  final String name;
+  final IconData icon;
+
+  ItemHomepage(this.name, this.icon);
 }
